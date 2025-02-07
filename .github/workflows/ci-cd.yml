@@ -1,4 +1,4 @@
-name: Deploy React to Vercel
+name: Deploy React to Vercel with Docker
 
 on:
   push:
@@ -6,33 +6,47 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
+      # Step 1: Checkout the code
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # Step 2: Set up Docker Buildx (optional for multi-platform builds)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Build Docker image
+      - name: Build Docker Image
+        run: |
+          docker build -t my-react-app .
+      
+      - name: Log in to Docker Hub
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+
+      # Step 4: Push Docker image to Docker Hub (optional)
+      - name: Push Docker Image to Docker Hub
+        run: |
+          echo ${{ secrets.DOCKER_USERNAME }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker tag my-react-app ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
+
+      # Step 5: Install Node.js (for building the React app)
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # Step 6: Install dependencies for React app
       - name: Install Dependencies
         run: npm install
 
+      # Step 7: Build the React project
       - name: Build Project
         run: npm run build
 
-      - name: Log in to Docker Hub
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-
-      - name: Build Docker Image
-        run: docker build -t my-react-app .
-
-      - name: Push Docker Image
-        run: docker push my-react-app
-
+      # Step 8: Deploy the React app to Vercel
       - name: Deploy to Vercel
         run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
-
