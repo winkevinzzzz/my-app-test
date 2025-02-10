@@ -6,8 +6,29 @@ on:
       - main
 
 jobs:
-  deploy:
+  merge-and-deploy:
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "thean.tep.tt@gmail.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: Merge Main into Master
+        run: |
+          git fetch origin
+          git checkout master || git checkout -b master
+          git merge origin/main --no-edit
+          git push origin master
+
+  deploy:
+    needs: merge-and-deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
 
     steps:
       - name: Checkout Code
