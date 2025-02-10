@@ -1,52 +1,100 @@
-/* General Body Styling */
+/* General Styles */
 body {
-  background: #f0f4f8;
-  font-family: 'Arial', sans-serif;
   margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
   color: #333;
 }
 
-/* App Container Styling */
 .app-container {
-  background-color: #ffffff;
-  border-radius: 15px;
-  padding: 40px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Header Styles */
+.header {
   text-align: center;
-  max-width: 500px;
-  width: 90%;
-}
-
-/* Heading Styling */
-.greeting-text {
-  font-size: 36px;
-  font-weight: bold;
-  color: #4a90e2;
-  margin-bottom: 20px;
-}
-
-/* Description Styling */
-.description-text {
-  font-size: 18px;
-  color: #666;
-  line-height: 1.6;
-}
-
-/* Hover Effects for Links or Buttons (if needed) */
-a, button {
-  text-decoration: none;
-  background-color: #4a90e2;
+  padding: 50px 20px;
+  background-color: #6200ea;
   color: white;
-  padding: 10px 20px;
-  border-radius: 25px;
-  transition: background-color 0.3s ease;
+  width: 100%;
 }
 
-a:hover, button:hover {
-  background-color: #357ab7;
+.greeting-text {
+  font-size: 2.5rem;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.description-text {
+  font-size: 1.2rem;
+  animation: slideIn 1.5s ease-in-out;
+}
+
+/* Content Section Styles */
+.content-section {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Footer Styles */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
