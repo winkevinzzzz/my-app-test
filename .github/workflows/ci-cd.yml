@@ -3,7 +3,7 @@ name: Deploy React to Vercel
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   merge-and-deploy:
